@@ -6,7 +6,7 @@ import torch.nn.functional as F
 import torch.utils.data as data
 import matplotlib.pyplot as plt
 from sklearn.metrics import accuracy_score
-# import wandb
+import wandb
 
 from functions import (
     UCF101VideoDataset,
@@ -22,8 +22,8 @@ save_model_path = "./Conv3D_ckpt/"
 os.makedirs(save_model_path, exist_ok=True)
 
 # ---------------------- hyper-parameter ----------------------
-epochs        = 50
-batch_size    = 8
+epochs        = 20
+batch_size    = 64
 learning_rate = 1e-4
 log_interval  = 10
 img_x, img_y  = 256, 342
@@ -189,19 +189,19 @@ optimizer = torch.optim.Adam(myModel.parameters(), lr=learning_rate)   # optimiz
 
 
 # ---------------------- WandB ----------------------
-# print("Connecting WandB ...")
-# wandb.init(
-#     project="3DWaveformer-ucf101",
-#     name="classifier-1",
-#     config={
-#         "epochs": epochs,
-#         "batch_size": batch_size,
-#         "learning_rate": learning_rate,
-#         "architecture": "WaveVideoClassifier",
-#         "dataset": "UCF101",
-#         "num_classes": k
-#     }
-# )
+print("Connecting WandB ...")
+wandb.init(
+    project="3DWaveformer-ucf101",
+    name="classifier-1",
+    config={
+        "epochs": epochs,
+        "batch_size": batch_size,
+        "learning_rate": learning_rate,
+        "architecture": "WaveVideoClassifier",
+        "dataset": "UCF101",
+        "num_classes": k
+    }
+)
 
 
 
@@ -250,13 +250,13 @@ for epoch in range(epochs):
     np.save('./3Dwaveformer_epoch_test_loss.npy', C)
     np.save('./3Dwaveformer_epoch_test_score.npy', D)
 
-    # wandb.log({
-    #     "epoch": epoch + 1,
-    #     "Train/Loss": train_losses[-1],
-    #     "Train/Accuracy": train_scores[-1],
-    #     "Val/Loss": epoch_test_loss,
-    #     "Val/Accuracy": epoch_test_score
-    # })
+    wandb.log({
+        "epoch": epoch + 1,
+        "Train/Loss": train_losses[-1],
+        "Train/Accuracy": train_scores[-1],
+        "Val/Loss": epoch_test_loss,
+        "Val/Accuracy": epoch_test_score
+    })
 
 
 
@@ -287,4 +287,4 @@ plt.savefig("./fig_3Dwaveformer.png", dpi=600)
 # plt.close(fig)
 plt.show()
 
-# wandb.finish()
+wandb.finish()
