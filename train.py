@@ -191,8 +191,8 @@ optimizer = torch.optim.Adam(myModel.parameters(), lr=learning_rate)   # optimiz
 # ---------------------- WandB ----------------------
 # print("Connecting WandB ...")
 # wandb.init(
-#     project="ucf101-video",
-#     name="WaveVideoClassifier-baseline-1",
+#     project="3DWaveformer-ucf101",
+#     name="classifier-1",
 #     config={
 #         "epochs": epochs,
 #         "batch_size": batch_size,
