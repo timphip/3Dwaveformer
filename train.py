@@ -22,11 +22,12 @@ save_model_path = "./Conv3D_ckpt/"
 os.makedirs(save_model_path, exist_ok=True)
 
 # ---------------------- hyper-parameter ----------------------
-epochs        = 20
-batch_size    = 64
+epochs        = 40
+batch_size    = 48
 learning_rate = 1e-4
 log_interval  = 10
-img_x, img_y  = 256, 342
+img_x, img_y  = 112,112
+
 
 
 
